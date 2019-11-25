@@ -1,3 +1,4 @@
+import 'package:Inversiones/src/pages/MenuLateral.dart';
 import 'package:flutter/material.dart';
 import 'package:Inversiones/src/bloc/provider.dart';
 import 'package:Inversiones/src/models/proyecto_models.dart';
@@ -22,9 +23,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text('Bienvenido a ColFunding S.A.S')
+        backgroundColor: Colors.blue[800],
+        title: Text('ColFunding'),
+        centerTitle: true,
         
-      ),
+        ),
+
+        drawer: MenuLateral(),
       body: _crearListado(),
 
       floatingActionButton: _crearBoton(context),
@@ -76,7 +81,7 @@ class _HomePageState extends State<HomePage> {
               ? Image(image: AssetImage('assets/no-image.png'))
               : FadeInImage(
                 image: NetworkImage( proyecto.fotoUrl ),
-                placeholder: AssetImage('assets/jar-loading.gif'),
+                placeholder: AssetImage('assets/time-money.gif'),
                 height: 300.0,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -97,7 +102,7 @@ class _HomePageState extends State<HomePage> {
  _crearBoton(BuildContext context){
 
       return FloatingActionButton(child: Icon(Icons.add),
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Colors.blue[800],
         onPressed: () { 
           Navigator.pushNamed(context, 'proyecto');
 

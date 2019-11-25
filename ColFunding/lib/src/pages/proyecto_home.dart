@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,8 +5,6 @@ import 'package:Inversiones/src/models/proyecto_models.dart';
 import 'package:Inversiones/src/providiers/proyectos_providier.dart';
 import 'package:Inversiones/src/utils/logica.dart' as logica;
 import 'package:image_picker/image_picker.dart';
-
-
 
 class ProyectoPage extends StatefulWidget {
 
@@ -38,8 +34,9 @@ class _ProyectoPageState extends State<ProyectoPage> {
     return Scaffold(
 
       appBar: AppBar(
-
-            title: Text('Proyectos'),
+        backgroundColor: Colors.blue[800],
+        title: Text('ColFunding'),
+        centerTitle: true,
 
             actions: <Widget>[
               IconButton( 
@@ -139,6 +136,7 @@ class _ProyectoPageState extends State<ProyectoPage> {
 
         value: proyecto.disponible,
         title: Text('Disponible'),
+        activeColor: Colors.blue[800],
         onChanged: (value) =>setState(() {
           
             proyecto.disponible= value;
@@ -152,10 +150,11 @@ class _ProyectoPageState extends State<ProyectoPage> {
 
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
             textColor: Colors.white,
-            color: Colors.blueAccent,
+            color: Colors.blue[800],
             label: Text('Guardar'),
             icon: Icon(Icons.save),
             onPressed: ( _guardando ) ? null : _submit,
+            
                  
           ); 
       }
@@ -193,8 +192,6 @@ class _ProyectoPageState extends State<ProyectoPage> {
       content: Text( mensaje ),
       duration: Duration( milliseconds: 1500),
     );
-
-    scaffoldKey.currentState.showSnackBar(snackbar);
   }
 
 
@@ -204,7 +201,7 @@ class _ProyectoPageState extends State<ProyectoPage> {
       
       return FadeInImage(
         image: NetworkImage( proyecto.fotoUrl ),
-        placeholder: AssetImage('images/assets/jar-loading.gif'),
+        placeholder: AssetImage('assets/time-money.gif'),
         height: 300.0,
         fit: BoxFit.contain,
       );
@@ -213,7 +210,7 @@ class _ProyectoPageState extends State<ProyectoPage> {
 
       return Image(
 
-        image: AssetImage( foto?.path ?? 'images/assets/no-image.png'),
+        image: AssetImage( foto?.path ?? 'assets/no-image.png'),
         height: 300.0,
         fit: BoxFit.cover,
 
@@ -226,21 +223,8 @@ class _ProyectoPageState extends State<ProyectoPage> {
 
   _seleccionarFoto() async {
 
-    _procesarImagen( ImageSource.gallery );
-
-  }
-  
-  
-  _tomarFoto() async {
-
-    _procesarImagen( ImageSource.camera );
-
-  }
-
-  _procesarImagen( ImageSource origen ) async {
-
-    foto = await ImagePicker.pickImage(
-      source: origen
+     foto = await ImagePicker.pickImage(
+      source: ImageSource.gallery
     );
 
     if ( foto != null ) {
@@ -250,6 +234,25 @@ class _ProyectoPageState extends State<ProyectoPage> {
     setState(() {});
 
   }
+  
+  
+  _tomarFoto() async {
 
-}
+
+    foto = await ImagePicker.pickImage(
+      source: ImageSource.camera
+    );
+
+    if ( foto != null ) {
+      proyecto.fotoUrl = null;
+    }
+
+    setState(() {});
+
+  }
+    
+
+  }
+
+
 
