@@ -16,20 +16,38 @@ bool isNumeric( String s){
      context: context,
      builder: (context){
 
-       return AlertDialog(
+   return AlertDialog(
 
-        title: Text('Informacion del usuario incorrecta!!') ,
-        content: Text(mensaje),
+        title: Container(child: Text('Error!!'),
+
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: <Color> [
+            Colors.white,
+            Colors.white,
+          ],
+        ),
+      ),
+        ),
+        
+        content: Text('Informacion Incorrecta!!'),
+
+
 
         actions: <Widget>[
 
           FlatButton(
 
-              child: Text('Ok'),
+              child: Text('Regresar'),
               onPressed: () => Navigator.of(context).pop(),
+          
+          
           ),
-        ],
-       );
+        
+      
+           ],
+        );
      }
    );
 }
