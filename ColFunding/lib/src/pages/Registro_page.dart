@@ -6,9 +6,11 @@ import '../utils/logica.dart';
 import 'MenuLateral.dart';
 
 
-class LoginPage extends StatelessWidget {
+class RegistroPage extends StatelessWidget {
 
-  final usuarioProvidier=new UsuarioProvidier();
+  final usuarioProvider = new UsuarioProvidier();
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -68,7 +70,7 @@ class LoginPage extends StatelessWidget {
               ),
               child: Column(
                 children: <Widget>[
-                  Text('Iniciar Sesión', style: TextStyle(fontSize: 20.0)),
+                  Text('Registro', style: TextStyle(fontSize: 20.0)),
                   SizedBox( height: 60.0 ),
                   _crearEmail( bloc ),
                   SizedBox( height: 30.0 ),
@@ -162,7 +164,7 @@ class LoginPage extends StatelessWidget {
         return RaisedButton(
           child: Container(
             padding: EdgeInsets.symmetric( horizontal: 50.0, vertical: 15.0),
-            child: Text('Iniciar Sesión'),
+            child: Text('Registrarse'),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0)
@@ -170,20 +172,19 @@ class LoginPage extends StatelessWidget {
           elevation: 0.0,
           color: Colors.blue[800],
           textColor: Colors.white,
-          onPressed: snapshot.hasData ? ()=> _login(bloc, context) : null
+          onPressed: snapshot.hasData ? ()=> _register(bloc, context) : null
         );
       },
     );
   }
 
-  _login(LoginBloc bloc, BuildContext context) async{
+  _register(LoginBloc bloc, BuildContext context) async {
 
-
-    Map info = await usuarioProvidier.login(bloc.email, bloc.password);
+  final info = await usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
 
     if( info['ok'] ){
 
-      Navigator.pushReplacementNamed(context, 'home');
+      Navigator.pushReplacementNamed(context, 'login');
     }
     else{
       mostrarAlerta( context, info['mensaje'] );
@@ -234,7 +235,7 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.only(top: 50.0),
           child: Column(
             children: <Widget>[
-              Icon( Icons.person, color: Colors.blue[800], size: 100.0 ),
+              Icon( Icons.person_add, color: Colors.blue[800], size: 100.0 ),
               SizedBox( height: 10.0, width: double.infinity ),
               Text('', style: TextStyle( color: Colors.white, fontSize: 25.0 ))
             ],

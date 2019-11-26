@@ -5,18 +5,20 @@ import 'package:http/http.dart' as http;
 import 'package:mime_type/mime_type.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:Inversiones/src/models/proyecto_models.dart';
+import 'package:Inversiones/src/preferencias/preferencias_usuario.dart';
 
 
 class ProyectosProvidier{
 
 
   final String _http = 'https://inversiones-bec58.firebaseio.com';
+  final _prefs = PreferenciasUsuario();
 
 
   Future<bool> crearProyecto( ProyectoModel proyecto ) async{
 
 
-    final url= '$_http/proyectos.json';
+    final url= '$_http/proyectos.json?auth=${_prefs.token}';
 
      final resp = await http.post(url, body: proyectoToJson( proyecto ));
 
@@ -30,7 +32,7 @@ class ProyectosProvidier{
     Future<List<ProyectoModel>> cargarProyecto() async{
 
 
-    final url= '$_http/proyectos.json';
+    final url= '$_http/proyectos.json?auth=${_prefs.token}';
     final res= await http.get(url);
 
     final Map<String, dynamic> decodedData = json.decode(res.body);
@@ -55,7 +57,7 @@ class ProyectosProvidier{
 
     Future<bool> editarProyecto( ProyectoModel proyecto ) async {
     
-    final url = '$_http/proyectos/${ proyecto.id }.json';
+    final url = '$_http/proyectos/${ proyecto.id }.json?auth=${_prefs.token}';
 
     final resp = await http.put( url, body: proyectoToJson(proyecto) );
 
@@ -68,7 +70,7 @@ class ProyectosProvidier{
   }
   Future<int> borrarProyecto( String id ) async { 
 
-    final url  = '$_http/proyectos/$id.json';
+    final url  = '$_http/proyectos/$id.json?auth=${_prefs.token}';
     final resp = await http.delete(url);
 
     print( resp.body );
